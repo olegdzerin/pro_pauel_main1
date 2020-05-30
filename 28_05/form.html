@@ -1,0 +1,58 @@
+<!doctype html>
+<body>
+<form id="formElem">
+  <input type="text" name="name" value="John">
+  <input type="text" name="surname" value="Smith">
+  
+</form>
+
+<form name="person">
+  <input name="name" value="Петя">
+  <input name="surname" value="Васечкин">
+  <input type="text" onclick="init()">
+  <btn id="btn" onclick="getLocalHost()">btn</btn>
+</form>
+
+<script>
+  // заполним FormData данными из формы
+  // let formData = new FormData(document.form);
+  let formData = new FormData(document.forms.person);
+// console.log(FormData);
+// console.log(formData);
+// console.log(document.forms.person);
+  // добавим ещё одно поле
+ // formData.append("middle", "Иванович");
+
+  // отправим данные
+function init(){
+      console.log('init');
+    let xhr = new XMLHttpRequest();
+  xhr.open("POST", "localhost:3000/aboutForm");
+  xhr.setRequestHeader("Content-type", "multipart/form-data");
+  xhr.send(formData);
+
+  xhr.onload = () => {
+    console.log(xhr.response);
+    console.log(xhr.responseText);
+  };
+  xhr.onerror = ()=>{
+    console.log('помилка');
+  };
+}
+function getLocalHost(){
+      console.log('local');
+    let xhr = new XMLHttpRequest();
+  xhr.open("GET", "localhost:3000");
+  xhr.setRequestHeader("Content-type", "multipart/form-data");
+  xhr.send();
+
+  xhr.onload = () => {
+    console.log(xhr.response);
+    console.log(xhr.responseText);
+  };
+  xhr.onerror = ()=>{
+    console.log('помилка');
+  };
+}
+</script>
+</body>

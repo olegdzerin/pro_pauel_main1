@@ -1,6 +1,6 @@
 const querystring = require('querystring');
 const http = require('http');
-const chunk = require('../17_05_os_process_http/chunk.js');
+const chunk = require('../../17_05_os_process_http/chunk.js');
 const postData = querystring.stringify({
     'msg': 'Hello World!'
   });
@@ -25,7 +25,9 @@ const postData = querystring.stringify({
     // res.on('data', (chunk) => {
     //   console.log(`BODY: ${chunk}`);
     // });a
-      
+    // res.on('data', (data) => { 
+  
+    // });
     res.on('end', () => {
       console.log('No more data in response.');
     });
@@ -33,9 +35,14 @@ const postData = querystring.stringify({
   req.on('error', (e) => {
     console.error(`problem with request: ${e.message}`);
   });
-req.write(chunk.chunk());
+ req.on('response', function (res) { 
+   console.log(res.headers);
+ });
+module.exports = req;
+req.write(querystring.stringify(chunk.chunk(chunk.chunk())));
 // req.on('data',);
 req.end('write');
+// console.log(postData);
   
   
   
